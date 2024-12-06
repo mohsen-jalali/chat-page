@@ -11,7 +11,7 @@ class RouteGenerator {
     return {
       Routes.chatPage: (context) => BlocProvider(
             create: (context) => ChatPageCubit(),
-            child: const ChatPage(),
+            child:  ChatPage(),
           ),
     };
   }

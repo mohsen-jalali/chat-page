@@ -24,6 +24,8 @@ mixin _$MessageEntity {
   set senderId(String value) => throw _privateConstructorUsedError;
   DateTime get sentAt => throw _privateConstructorUsedError;
   set sentAt(DateTime value) => throw _privateConstructorUsedError;
+  DateTime? get expiresAt => throw _privateConstructorUsedError;
+  set expiresAt(DateTime? value) => throw _privateConstructorUsedError;
 
   /// Create a copy of MessageEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +40,12 @@ abstract class $MessageEntityCopyWith<$Res> {
           MessageEntity value, $Res Function(MessageEntity) then) =
       _$MessageEntityCopyWithImpl<$Res, MessageEntity>;
   @useResult
-  $Res call({String id, String text, String senderId, DateTime sentAt});
+  $Res call(
+      {String id,
+      String text,
+      String senderId,
+      DateTime sentAt,
+      DateTime? expiresAt});
 }
 
 /// @nodoc
@@ -60,6 +67,7 @@ class _$MessageEntityCopyWithImpl<$Res, $Val extends MessageEntity>
     Object? text = null,
     Object? senderId = null,
     Object? sentAt = null,
+    Object? expiresAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -78,6 +86,10 @@ class _$MessageEntityCopyWithImpl<$Res, $Val extends MessageEntity>
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      expiresAt: freezed == expiresAt
+          ? _value.expiresAt
+          : expiresAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -90,7 +102,12 @@ abstract class _$$MessageEntityImplCopyWith<$Res>
       __$$MessageEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String text, String senderId, DateTime sentAt});
+  $Res call(
+      {String id,
+      String text,
+      String senderId,
+      DateTime sentAt,
+      DateTime? expiresAt});
 }
 
 /// @nodoc
@@ -110,6 +127,7 @@ class __$$MessageEntityImplCopyWithImpl<$Res>
     Object? text = null,
     Object? senderId = null,
     Object? sentAt = null,
+    Object? expiresAt = freezed,
   }) {
     return _then(_$MessageEntityImpl(
       id: null == id
@@ -128,6 +146,10 @@ class __$$MessageEntityImplCopyWithImpl<$Res>
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      expiresAt: freezed == expiresAt
+          ? _value.expiresAt
+          : expiresAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -139,7 +161,8 @@ class _$MessageEntityImpl extends _MessageEntity {
       {required this.id,
       required this.text,
       required this.senderId,
-      required this.sentAt})
+      required this.sentAt,
+      this.expiresAt})
       : super._();
 
   @override
@@ -150,6 +173,8 @@ class _$MessageEntityImpl extends _MessageEntity {
   String senderId;
   @override
   DateTime sentAt;
+  @override
+  DateTime? expiresAt;
 
   /// Create a copy of MessageEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -165,7 +190,8 @@ abstract class _MessageEntity extends MessageEntity {
       {required String id,
       required String text,
       required String senderId,
-      required DateTime sentAt}) = _$MessageEntityImpl;
+      required DateTime sentAt,
+      DateTime? expiresAt}) = _$MessageEntityImpl;
   _MessageEntity._() : super._();
 
   @override
@@ -180,6 +206,9 @@ abstract class _MessageEntity extends MessageEntity {
   @override
   DateTime get sentAt;
   set sentAt(DateTime value);
+  @override
+  DateTime? get expiresAt;
+  set expiresAt(DateTime? value);
 
   /// Create a copy of MessageEntity
   /// with the given fields replaced by the non-null parameter values.

@@ -12,10 +12,11 @@ class MessageEntity extends Equatable with _$MessageEntity {
     required String text,
     required String senderId,
     required DateTime sentAt,
+    DateTime? expiresAt,
   }) = _MessageEntity;
 
   @override
   List<Object?> get props => [
-    id,
-  ];
+        id,
+      ];
 }
