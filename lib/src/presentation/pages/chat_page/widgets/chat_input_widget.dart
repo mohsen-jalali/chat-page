@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gamer_tag/src/presentation/bloc/chat_cubit/chat_cubit.dart';
-import 'package:gamer_tag/src/presentation/bloc/chat_cubit/chat_page_state.dart';
 import 'package:gamer_tag/src/presentation/pages/chat_page/widgets/timer_icon_widget.dart';
 import 'package:gamer_tag/src/presentation/ui/widgets/custom_text_field.dart';
 import 'package:gamer_tag/src/presentation/ui/widgets/icon_widget.dart';
-import 'package:gamer_tag/src/presentation/utils/constants/assets.dart';
 import 'package:gamer_tag/src/presentation/utils/extenstions/context_extensions.dart';
 
 class ChatInputWidget extends StatelessWidget {

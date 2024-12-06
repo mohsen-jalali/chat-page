@@ -31,13 +31,14 @@ class ChatAppBarWidget extends StatelessWidget {
         ),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
           color: const Color(0xffF9F9F9).withOpacity(0.94),
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
           child: SafeArea(
+            bottom: false,
             child: Row(
               children: [
                 IconWidget(

@@ -33,6 +33,14 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _messageController.dispose();
+    _listKey.currentState?.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
   void didChangeMetrics() {
     super.didChangeMetrics();
     final mediaQuery = MediaQuery.of(context);
