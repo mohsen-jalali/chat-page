@@ -18,7 +18,7 @@ class ChatPageCubit extends BaseCubit<ChatPageState> {
     avatar: "https://picsum.photos/300/300",
   );
 
-  static const int autoDeleteMessageSeconds = 10;
+  static const int autoDeleteMessageSeconds = 60;
 
   List<MessageEntity> messageList = [
     MessageEntity(
