@@ -30,7 +30,8 @@ class ChatBubbleWidget extends StatefulWidget {
   State<ChatBubbleWidget> createState() => _ChatBubbleWidgetState();
 }
 
-class _ChatBubbleWidgetState extends State<ChatBubbleWidget> with AutomaticKeepAliveClientMixin {
+class _ChatBubbleWidgetState extends State<ChatBubbleWidget>
+    with AutomaticKeepAliveClientMixin {
   Timer? timer;
 
   @override
@@ -118,11 +119,11 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> with AutomaticKeepA
                   widget.isSender ? Alignment.topRight : Alignment.topLeft,
               child: CustomPaint(
                 painter: SpecialChatBubbleThree(
-                  color: widget.isSender
-                      ? (isAutoDelete
-                          ? context.colorScheme.secondary
-                          : context.colorScheme.primary)
-                      : context.colorScheme.onSurface,
+                  color: isAutoDelete
+                      ? context.colorScheme.secondary
+                      : (widget.isSender
+                          ? context.colorScheme.primary
+                          : context.colorScheme.onSurface),
                   alignment:
                       widget.isSender ? Alignment.topRight : Alignment.topLeft,
                 ),
@@ -138,9 +139,11 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> with AutomaticKeepA
                     context: context,
                     additionalStyle: TextStyle(
                       fontSize: 16,
-                      color: widget.isSender
+                      color: isAutoDelete
                           ? context.colorScheme.surface
-                          : context.colorScheme.tertiary,
+                          : (widget.isSender
+                              ? context.colorScheme.surface
+                              : context.colorScheme.tertiary),
                     ),
                     textAlign: TextAlign.left,
                   ),
