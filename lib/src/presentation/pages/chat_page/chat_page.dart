@@ -5,6 +5,7 @@ import 'package:gamer_tag/src/presentation/bloc/chat_cubit/chat_page_state.dart'
 import 'package:gamer_tag/src/presentation/pages/chat_page/widgets/chat_app_bar_widget.dart';
 import 'package:gamer_tag/src/presentation/pages/chat_page/widgets/chat_bubble_widget.dart';
 import 'package:gamer_tag/src/presentation/pages/chat_page/widgets/chat_input_widget.dart';
+import 'package:gamer_tag/src/presentation/pages/chat_page/widgets/date_time_widget.dart';
 import 'package:gamer_tag/src/presentation/ui/widgets/text_widget.dart';
 import 'package:gamer_tag/src/presentation/utils/extenstions/context_extensions.dart';
 import 'package:gamer_tag/src/presentation/utils/extenstions/date_time_extensions.dart';
@@ -99,11 +100,14 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                         child: ChatBubbleWidget(
                           message: state.message,
                           animation: animation,
+                          isGrouped: false,
                           isSender:
                               cubit.isMessageFromUser(state.message.senderId),
                           isRemoved: true,
                           isManualRemoved: state.isManualRemove,
                           messageIndex: state.messageIndex,
+                          isLastGroupMessage:
+                              isLastGropedMessage(state.messageIndex),
                         ),
                       ),
                       duration: const Duration(milliseconds: 500),
@@ -116,77 +120,45 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                 onTap: () {
                   FocusManager.instance.primaryFocus?.unfocus();
                 },
-                child: AnimatedList.separated(
-                  key: _listKey,
-                  controller: _scrollController,
-                  removedSeparatorBuilder: (context, index, animation) =>
-                      SizeTransition(
-                    sizeFactor: animation,
-                    child: const SizedBox(
-                      height: 8,
-                    ),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  separatorBuilder: (context, index, animation) =>
-                      SizeTransition(
-                    sizeFactor: animation,
-                    child: Builder(
-                      builder: (context) {
-                        final dateWidget = Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: TextWidget.regular(
-                              cubit.messageList[index].sentAt.dateFormat,
-                              context: context,
-                              additionalStyle: TextStyle(
-                                  fontSize: 12,
-                                  color: context.colorScheme.tertiary
-                                      .withOpacity(0.6)),
-                            ),
-                          ),
-                        );
-                        if (cubit.messageList[index + 1].sentAt
-                                .difference(cubit.messageList[index].sentAt)
-                                .inMinutes >
-                            2) {
-                          return dateWidget;
-                        }
-                        return const SizedBox(
-                          height: 8,
-                        );
-                      },
-                    ),
-                  ),
-                  itemBuilder: (context, index, animation) {
-                    return Column(
-                      children: [
-                        index == 0
-                            ? Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: TextWidget.regular(
-                                    cubit.messageList[index].sentAt.dateFormat,
-                                    context: context,
-                                    additionalStyle: TextStyle(
-                                        fontSize: 12,
-                                        color: context.colorScheme.tertiary
-                                            .withOpacity(0.6)),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox(),
-                        ChatBubbleWidget(
-                          messageIndex: index,
-                          animation: animation,
-                          message: cubit.messageList[index],
-                          isSender: cubit.isMessageFromUser(
-                              cubit.messageList[index].senderId),
-                        ),
-                      ],
-                    );
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (scrollNotification) {
+                    if (scrollNotification is UserScrollNotification) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
+                    return false;
                   },
+                  child: AnimatedList(
+                    key: _listKey,
+                    controller: _scrollController,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    itemBuilder: (context, index, animation) {
+                      return Column(
+                        children: [
+                          (index == 0 ||
+                                  cubit.messageList[index].sentAt
+                                      .isDifferentMoreThan2Min(
+                                          cubit.messageList[index - 1].sentAt))
+                              ? DateTimeWidget(
+                                  dateTime: cubit.messageList[index].sentAt)
+                              : const SizedBox(),
+                          ChatBubbleWidget(
+                            messageIndex: index,
+                            animation: animation,
+                            isGrouped: index > 0
+                                ? cubit.messageList[index].sentAt
+                                    .isDifferentLessThan2Min(
+                                        cubit.messageList[index - 1].sentAt)
+                                : false,
+                            message: cubit.messageList[index],
+                            isSender: cubit.isMessageFromUser(
+                                cubit.messageList[index].senderId),
+                            isLastGroupMessage: isLastGropedMessage(index),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -201,7 +173,7 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                   cubit.toggleTimerMessage();
                 },
                 onSendMessage: () {
-                  cubit.sendMessage(_messageController.text);
+                  cubit.sendTextMessage(_messageController.text);
                 },
               ),
             ),
@@ -209,5 +181,20 @@ class _ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         ],
       ),
     );
+  }
+
+  bool isLastGropedMessage(int index) {
+    if (cubit.messageList.length - 1 <= index) {
+      return true;
+    }
+    if (cubit.messageList[index + 1].senderId !=
+        cubit.messageList[index].senderId) {
+      return true;
+    }
+    if (cubit.messageList[index + 1].sentAt
+        .isDifferentMoreThan2Min(cubit.messageList[index].sentAt)) {
+      return true;
+    }
+    return false;
   }
 }

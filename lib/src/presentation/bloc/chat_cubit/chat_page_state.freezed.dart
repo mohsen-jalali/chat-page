@@ -64,8 +64,6 @@ abstract class $SendMessageStateCopyWith<$Res> {
       _$SendMessageStateCopyWithImpl<$Res, SendMessageState>;
   @useResult
   $Res call({MessageEntity message});
-
-  $MessageEntityCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -92,16 +90,6 @@ class _$SendMessageStateCopyWithImpl<$Res, $Val extends SendMessageState>
               as MessageEntity,
     ) as $Val);
   }
-
-  /// Create a copy of SendMessageState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MessageEntityCopyWith<$Res> get message {
-    return $MessageEntityCopyWith<$Res>(_value.message, (value) {
-      return _then(_value.copyWith(message: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -113,9 +101,6 @@ abstract class _$$SentMessageStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({MessageEntity message});
-
-  @override
-  $MessageEntityCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -528,8 +513,6 @@ abstract class $DeleteMessageStateCopyWith<$Res> {
       _$DeleteMessageStateCopyWithImpl<$Res, DeleteMessageState>;
   @useResult
   $Res call({int messageIndex, MessageEntity message, bool isManualRemove});
-
-  $MessageEntityCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -566,16 +549,6 @@ class _$DeleteMessageStateCopyWithImpl<$Res, $Val extends DeleteMessageState>
               as bool,
     ) as $Val);
   }
-
-  /// Create a copy of DeleteMessageState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MessageEntityCopyWith<$Res> get message {
-    return $MessageEntityCopyWith<$Res>(_value.message, (value) {
-      return _then(_value.copyWith(message: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -587,9 +560,6 @@ abstract class _$$DeletedMessageStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({int messageIndex, MessageEntity message, bool isManualRemove});
-
-  @override
-  $MessageEntityCopyWith<$Res> get message;
 }
 
 /// @nodoc

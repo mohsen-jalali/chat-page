@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gamer_tag/src/domain/entities/message_entity/message_entity.dart';
+import 'package:gamer_tag/src/domain/entities/message_entity/text_message_entity.dart';
 import 'package:gamer_tag/src/domain/entities/user_entity/user_entity.dart';
 
 part 'chat_page_state.freezed.dart';

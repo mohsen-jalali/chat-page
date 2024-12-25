@@ -1,22 +1,25 @@
 import 'package:equatable/equatable.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'message_entity.freezed.dart';
+enum MessageTypeEnum { text, image, unsupported }
 
-@unfreezed
-class MessageEntity extends Equatable with _$MessageEntity {
-  const MessageEntity._();
+abstract class MessageEntity extends Equatable {
+  final String id;
+  final String senderId;
+  final DateTime sentAt;
+  final MessageTypeEnum messageType;
+  final DateTime? expiresAt;
 
-  factory MessageEntity({
-    required String id,
-    required String text,
-    required String senderId,
-    required DateTime sentAt,
-    DateTime? expiresAt,
-  }) = _MessageEntity;
+  const MessageEntity({
+    required this.id,
+    required this.senderId,
+    required this.sentAt,
+    required this.expiresAt,
+    required this.messageType,
+  });
 
   @override
   List<Object?> get props => [
         id,
       ];
+
 }
